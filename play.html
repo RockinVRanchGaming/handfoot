@@ -480,7 +480,7 @@ details summary{font-weight:800;font-size:14px;color:var(--btn);cursor:pointer;m
   PRESETS.forEach(function (p) { p.rules = {}; RULEKEYS.forEach(function (k) { p.rules[k] = p.over[k] !== undefined ? p.over[k] : RULE0[k]; }); });
   var FAM_OUT = [[1, 1, 0], [2, 1, 0], [2, 2, 0], [3, 2, 0]], STD_OUT = [[1, 1, 0], [2, 2, 0], [3, 3, 0], [3, 3, 1]];
 
-  var DEF = { sound: true, vib: true, voice: true, voiceName: '', vstyle: 'smooth', wake: false, banter: true, autoUpdate: true, theme: 'auto', players: 4, teamCount: 2, preset: 'fife' };
+  var DEF = { sound: true, vib: true, voice: true, voiceName: '', vstyle: 'natural', vs2: true, wake: false, banter: true, autoUpdate: true, theme: 'auto', players: 4, teamCount: 2, preset: 'fife' };
   RULEKEYS.forEach(function (k) { DEF[k] = RULE0[k]; });
   var LIM = { players: [2, 12, 1], teamCount: [2, 6, 1], meld1: [0, 500, 10], meld2: [0, 500, 10], meld3: [0, 500, 10], meld4: [0, 500, 10],
     cleanBook: [0, 2000, 50], dirtyBook: [0, 2000, 50], cleanRun: [0, 3000, 100], dirtyRun: [0, 2000, 50], wildBook: [0, 3000, 100], bigRun: [0, 5000, 100],
@@ -489,6 +489,7 @@ details summary{font-weight:800;font-size:14px;color:var(--btn);cursor:pointer;m
   function defaults() { var o = {}; for (var k in DEF) o[k] = DEF[k]; return o; }
   var settings = defaults(), se0 = load(K_SET);
   if (se0) for (var key in DEF) { if (se0[key] !== undefined && typeof se0[key] === typeof DEF[key]) settings[key] = se0[key]; }
+  if (se0 && se0.vs2 === undefined && settings.vstyle === 'smooth') settings.vstyle = 'natural'; // one-time switch to the new Natural default
   if (['auto', 'light', 'dark'].indexOf(settings.theme) < 0) settings.theme = 'auto';
   if (['bonus', 'against'].indexOf(settings.red3Mode) < 0) settings.red3Mode = 'bonus';
   if ([0, 1, 2].indexOf(settings.progOut) < 0) settings.progOut = 0;
