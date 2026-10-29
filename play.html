@@ -310,6 +310,16 @@ html, body { position: fixed; inset: 0; width: 100%; height: 100%; overflow: hid
 .band { padding: 9px 12px 9px 40px; }
 #bands { gap: 9px !important; }
 .app { gap: 7px !important; }
+
+/* dice tray: its own close button */
+.tray { position: relative; padding: 10px 60px 10px 16px; gap: 8px 18px; }
+.trayx { position: absolute; top: 8px; right: 8px; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(150deg, #8C8576, #4C4639); color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+.trayx svg { width: 20px; height: 20px; }
+.trayx:active { transform: scale(.93); }
+.verbtn{min-height:48px;border-radius:12px;background:var(--bg);border:1px solid var(--line);font-weight:800;font-size:16px;color:var(--btn);padding:0 14px;width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.verbtn small{color:var(--muted);font-weight:700;font-size:13px;display:block}
+.sheet .rules h3{margin:12px 0 4px;font-size:15px;color:var(--btn)}.sheet .rules p,.sheet .rules li{font-size:14px;line-height:1.45;margin:0 0 6px;color:var(--ink)}.sheet .rules ul{padding-left:18px;margin:0}
+.sheet .rules table{width:100%;border-collapse:collapse;font-size:14px}.sheet .rules td{padding:5px 4px;border-bottom:1px solid var(--line);color:var(--ink)}.sheet .rules td:last-child{text-align:right;font-weight:800}
 /* ===== Hand & Foot: Rockin' V Ranch look ===== */
 :root{--set-a:#E0C27C;--set-b:#A8873F;--gold:#B89A5E;--gold2:#E0C27C;--cream:#F1E8D3;--brown:#2a1f12;--burg:#8B1A14;--burg2:#5E100C}
 html,body{position:fixed;inset:0;width:100%;height:var(--ah,100dvh);overflow:hidden;overscroll-behavior:none;background:radial-gradient(ellipse at 50% 30%,#2a211b 0%,#0e0b09 80%) #0e0b09!important;color:var(--cream);-webkit-touch-callout:none}
@@ -396,6 +406,12 @@ details summary{font-weight:800;font-size:14px;color:var(--btn);cursor:pointer;m
 #turn .ph{animation:turnph 2.4s ease-in-out infinite;transform:rotate(-90deg);height:clamp(40px,14vmin,76px);width:auto}
 @keyframes turnph{0%,25%{transform:rotate(-90deg)}60%,100%{transform:rotate(0)}}
 @media (prefers-reduced-motion:reduce){#turn .ph{animation:none;transform:none}}
+
+.roster{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:12px;background:var(--bg)}
+.rchips{display:flex;flex-wrap:wrap;gap:6px}.rchip{padding:5px 10px;border-radius:14px;background:var(--panel);border:1px solid var(--line);font-weight:800;font-size:14px;color:var(--ink)}
+.rbtns{display:flex;gap:8px;flex-wrap:wrap}.rbtns .chipbtn{flex:1;min-height:44px;background:var(--panel);border:1px solid var(--line)}
+.setlinks{display:flex;flex-direction:column;gap:8px}
+.sheet .rules h3{margin:12px 0 4px;font-size:15px;color:var(--btn)}.sheet .rules p{font-size:14px;line-height:1.45;margin:0 0 6px;color:var(--ink)}
 </style>
 <div class="app">
   <div class="topbar"><button type="button" class="gt back" id="bBack" hidden aria-label="Undo the last change"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button><div class="status" id="status" role="status" aria-live="polite"></div></div>
@@ -420,6 +436,19 @@ details summary{font-weight:800;font-size:14px;color:var(--btn);cursor:pointer;m
   </div>
 </section>
 
+<section class="sheet" id="howSheet" aria-label="How to play" hidden>
+  <div class="sheet-inner">
+    <div class="top"><h2>How to play Hand &amp; Foot</h2><button class="x" type="button" data-close aria-label="Close">&#10005;</button></div>
+    <div class="rules">
+      <h3>The deal</h3><p>Use one more deck than the number of players, jokers in. Each player gets two piles: the hand, which you play first, and the foot, which you pick up once the hand is gone.</p>
+      <h3>Your turn</h3><p>Draw two from the deck, play what you can, then discard one. You can take the discard pile instead if you can use its top card right away with cards from your hand; you take the number of cards your rules allow.</p>
+      <h3>Melds and books</h3><p>Lay down three or more of the same rank. A book is seven of a kind: clean with no wilds, dirty with wilds. 2s and jokers are wild, and a meld can never have more wilds than natural cards. Red 3s are laid down for points; black 3s block the pile.</p>
+      <h3>Getting in and going out</h3><p>Your team's first meld each round must reach the meld minimum for that round. To go out you need the books your rules require, plus a partner's okay in partnership play.</p>
+      <h3>Scoring</h3><p>Add book bonuses, the going-out bonus and red 3s, plus the value of every card laid down, minus the cards still in your hand and foot. Exact point values for each version are under Rule versions in Settings.</p>
+    </div>
+    <button class="chipbtn" type="button" data-open="setSheet" style="min-height:46px">Back to settings</button>
+  </div>
+</section>
 <section class="sheet" id="verSheet" aria-label="Rule versions" hidden>
   <div class="sheet-inner">
     <div class="top"><h2>Rule versions</h2><button class="x" type="button" data-close aria-label="Close">&#10005;</button></div>
@@ -433,6 +462,7 @@ details summary{font-weight:800;font-size:14px;color:var(--btn);cursor:pointer;m
   <div class="sheet-inner">
     <div class="top"><h2>Settings</h2><button class="x" type="button" data-close aria-label="Close">&#10005;</button></div>
     <div class="cap2">Rules</div>
+    <div class="setlinks"><button class="verbtn" type="button" data-open="howSheet"><span>How to play &amp; scoring<small style="display:block">The basics of Hand &amp; Foot</small></span><span>Open &rsaquo;</span></button><button class="verbtn" type="button" data-teams="1"><span>Teams &amp; names<small style="display:block">Names, initials and saved teams</small></span><span>Open &rsaquo;</span></button></div>
     <button class="verbtn" type="button" data-open="verSheet"><span>Rule version<small id="verName" style="display:block"></small></span><span>See all &rsaquo;</span></button>
     <div class="list">
       <div class="li"><span>Teams or players scoring</span><div class="step"><button type="button" data-st="teamCount" data-d="-1" aria-label="Less Teams or players scoring">&minus;</button><output id="v_teamCount">0</output><button type="button" data-st="teamCount" data-d="1" aria-label="More Teams or players scoring">+</button></div></div><div class="li"><span>Players in the game<small class="hint2">decks needed = players + 1</small></span><div class="step"><button type="button" data-st="players" data-d="-1" aria-label="Less Players in the game">&minus;</button><output id="v_players">0</output><button type="button" data-st="players" data-d="1" aria-label="More Players in the game">+</button></div></div>
@@ -895,14 +925,30 @@ details summary{font-weight:800;font-size:14px;color:var(--btn);cursor:pointer;m
   /* ---------- teams sheet ---------- */
   function paintTeams() {
     var h = '<div class="list"><div class="li"><span>Teams or players</span><div class="step"><button type="button" data-st="teamCount" data-d="-1" aria-label="Fewer teams">&minus;</button><output id="v_teamCount2">' + settings.teamCount + '</output><button type="button" data-st="teamCount" data-d="1" aria-label="More teams">+</button></div></div>';
-    for (var t = 0; t < settings.teamCount; t++) h += '<div class="li"><span>Name ' + (t + 1) + '</span><input class="num name" type="text" data-name="' + t + '" value="' + esc(G.names[t]) + '" maxlength="14" aria-label="Team ' + (t + 1) + ' name"></div>';
+    for (var t = 0; t < settings.teamCount; t++) h += '<div class="li"><span>Name ' + (t + 1) + '</span><input class="num name" type="text" data-name="' + t + '" value="' + esc(G.names[t]) + '" maxlength="20" aria-label="Team ' + (t + 1) + ' name"></div>';
     h += '<div class="li"><span>Players in the game</span><div class="step"><button type="button" data-st="players" data-d="-1" aria-label="Fewer players">&minus;</button><output>' + settings.players + '</output><button type="button" data-st="players" data-d="1" aria-label="More players">+</button></div></div></div>';
-    h += '<div class="line2">Decks needed: ' + (settings.players + 1) + ' with jokers (one more than the number of players).</div><button type="button" class="go" data-close>Done</button>';
+    h += '<div class="line2">Decks needed: ' + (settings.players + 1) + ' with jokers (one more than the number of players).</div>';
+    var ro = roster();
+    h += '<div class="cap2">Saved teams</div><div class="roster">';
+    if (ro.length) h += '<div class="rchips">' + ro.map(function (n, i) { return '<span class="rchip">' + (i + 1) + '. ' + esc(n) + '</span>'; }).join('') + '</div><button type="button" class="go" data-roster="use">Use saved teams</button>';
+    else h += '<div class="line2">Save your usual teams once and every Rockin\u2019 V team game on this phone can load them with one tap.</div>';
+    h += '<div class="rbtns"><button type="button" class="chipbtn" data-roster="save">Save these names</button>' + (ro.length ? '<button type="button" class="chipbtn" data-roster="clear">Clear saved</button>' : '') + '</div></div>';
+    h += '<button type="button" class="go" data-close>Done</button>';
     $('teamBody').innerHTML = h;
+  }
+  // Saved team names are shared with the other Rockin' V team games on this phone.
+  var K_ROSTER = 'rv-teams-v1';
+  function roster() { var r = load(K_ROSTER); return Array.isArray(r) ? r.filter(function (x) { return typeof x === 'string' && x.trim(); }).slice(0, 12) : []; }
+  function isDef(n, t) { return !n || n === 'Team ' + (t + 1); }
+  function rosterTap(b) {
+    var a = b.getAttribute('data-roster'), ro = roster(), t;
+    if (a === 'use') { if (!ro.length) return; settings.teamCount = Math.min(6, Math.max(2, ro.length)); for (t = 0; t < MAXT; t++) G.names[t] = ro[t] || ('Team ' + (t + 1)); store(K_STATE, G); saveSet(); paintTeams(); buzz(15); tone(760, 0.07, 'triangle'); note('Loaded saved teams'); return; }
+    if (a === 'save') { var keep = []; for (t = 0; t < settings.teamCount; t++) if (!isDef(G.names[t], t)) keep.push(G.names[t]); if (!keep.length) { note('Type some team names first'); return; } store(K_ROSTER, keep); paintTeams(); buzz(15); tone(760, 0.07, 'triangle'); note('Saved ' + keep.length + ' team' + (keep.length > 1 ? 's' : '')); return; }
+    if (a === 'clear') { store(K_ROSTER, []); paintTeams(); tone(480, 0.06, 'triangle'); }
   }
   document.addEventListener('input', function (ev) {
     var el = ev.target; if (!el.getAttribute || el.getAttribute('data-name') === null) return;
-    var t = +el.getAttribute('data-name'); G.names[t] = el.value.slice(0, 14) || ('Team ' + (t + 1)); store(K_STATE, G); render();
+    var t = +el.getAttribute('data-name'); G.names[t] = el.value.slice(0, 20) || ('Team ' + (t + 1)); store(K_STATE, G); render();
   });
 
   /* ---------- rule versions sheet ---------- */
@@ -992,6 +1038,7 @@ details summary{font-weight:800;font-size:14px;color:var(--btn);cursor:pointer;m
     if (b.hasAttribute('data-close')) { hide(); return; }
     if (b.hasAttribute('data-open')) { var tgt = b.getAttribute('data-open'); if (tgt === 'verSheet') paintVersions(); if (tgt === 'setSheet') paintSettings(); show(tgt); return; }
     if (b.hasAttribute('data-teams')) { paintTeams(); show('teamSheet'); return; }
+    if (b.hasAttribute('data-roster')) { rosterTap(b); return; }
     if (b.hasAttribute('data-r') && b.classList.contains('cell')) { openRound(+b.getAttribute('data-r'), +b.getAttribute('data-t')); return; }
     if (b.hasAttribute('data-f') && draft) { stepField(b.getAttribute('data-f'), +b.getAttribute('data-d')); return; }
     if (b.hasAttribute('data-fs') && draft) { draft.e[b.getAttribute('data-fs')] = +b.getAttribute('data-v'); paintRound(); buzz(); tone(640, 0.05, 'triangle'); return; }
